@@ -1,0 +1,42 @@
+:2015 {
+	root D:\
+	push
+	browse
+	#websocket /echo cat
+	ext    .html
+
+	filebrowser /blog D:/ {
+		database ./blog.db
+	}
+	#tls self_signed
+	#forwardproxy {
+	#	hide_ip
+	#	hide_via
+	#}
+	
+	
+	authz {
+		loginURL "loginUrl1, loginUrl2"
+		casbinPolicyURL casbinPolicyUrl
+		cookieName apigate
+		logoutURL logouturl
+		
+		driverName sqlite3
+		dataSourceName "./authz.db"
+		
+		#driverName mysql
+		#dataSourceName usr:pwd@tcp(localhost:3306)/casbin?charset=utf8
+		
+		#driverName mssql
+		#dataSourceName "server=localhost;port=1433;user id=usr;password=pwd;database=casbin"
+		
+		#driverName postgres
+		#dataSourceName postgres://usr:pwd@localhost:5432/casbin?sslmode=disable
+		
+		model authz_model.conf
+		whitelist whitelist.csv
+		authWhitelist authWhitelist.csv
+		headKeyTransform headerKeyTransform.json
+	}
+	
+}
